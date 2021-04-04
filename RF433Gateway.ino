@@ -67,7 +67,7 @@
 #define debugOn // uncomment for debuging
 //#define printStat // uncomment for debuging
 //#define initEeprom
-#define useDns  // uncomment for using DNS resolution to find the server by name over internet - otherwise use stored server IP
+//#define useDns  // uncomment for using DNS resolution to find the server by name over internet - otherwise use stored server IP
 
 #include <HomeAutomationBytesCommands.h> // commands specifications
 #include <SPI.h>
@@ -330,7 +330,6 @@ void setup() {
 void loop() {
   delay(1);
 
-  //
   if (vw_have_message())        // message from RF434
   {
     TrameAnalyzeRFInput();
