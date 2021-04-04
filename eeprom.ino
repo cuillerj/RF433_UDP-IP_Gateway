@@ -14,10 +14,10 @@ uint8_t ipmask[4] = {
   0xFF, 0xFF, 0xFF, 0x00
 };
 uint8_t ipgateway[4] = {
-  0xC0, 0xA8, 0x01, 0x01
+  0xC0, 0xA8, 0x00, 0x01
 };
 uint8_t dnsAddr[4] = {
-  0xC0, 0xA8, 0x01, 0x01
+  0xC0, 0xA8, 0x00, 0x01
 };
 
 void InitEeprom() {
@@ -91,10 +91,15 @@ void PrintEeprom() {
   Serial.print("IP gw:");
   for (int i = 0; i < 4; i++)
   {
-    Serial.print(EEPROM.read(addrgateway + i));
+    Serial.print(EEPROM.read(addrdynDns+ i));
     Serial.print("-");
   }
   Serial.println();
-
+  Serial.print("IP dns:");
+  for (int i = 0; i < 4; i++)
+  {
+    Serial.print(EEPROM.read(addrdynDns + i));
+    Serial.print("-");
+  }
   Serial.println();
 }

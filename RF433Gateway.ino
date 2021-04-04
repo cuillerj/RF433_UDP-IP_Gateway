@@ -12,8 +12,9 @@
    suppression envoi liststation et ajout dans status
    version 6 retablissement lecture udp as station
    version 7 modification resolution DNS debug et non bloquante au demarrage
+   version 8 print dns
 */
-#define Version 7
+#define Version 8
 
 /*
   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
@@ -63,10 +64,10 @@
    if defined dns address must have been stored in eeprom
     if use set the server name inside RequestDns()
 */
-//#define debugOn // uncomment for debuging
+#define debugOn // uncomment for debuging
 //#define printStat // uncomment for debuging
 //#define initEeprom
-//#define useDns  // uncomment for using DNS resolution to find the server by name over internet - otherwise use stored server IP
+#define useDns  // uncomment for using DNS resolution to find the server by name over internet - otherwise use stored server IP
 
 #include <HomeAutomationBytesCommands.h> // commands specifications
 #include <SPI.h>
@@ -76,7 +77,7 @@ EthernetClient client;
 #ifdef useDns
 #include <Dns.h>
 DNSClient dnsClient;
-char hubServer[] = "yourhubserver.home";
+char hubServer[] = "cuillerj.chickenkiller.com";
 //char hubServer[]="yourhubserver.chickenkiller.com";
 #endif
 #include <EthernetUdp.h>         // UDP library from: bjoern@cs.stanford.edu 12/30/2008
@@ -168,7 +169,7 @@ char packetBuffer[UDP_TX_PACKET_MAX_SIZE]; //buffer to hold incoming packet,
 uint8_t *PpacketBuffer = &packetBuffer[0]; // pointer to the input UDP data zone
 #define rfStationPosition 8
 #define rfStartPosition 12
-uint8_t *PRfpacketBuffer = &packetBuffer[rfStartPosition]; // pointer to the input UDP data zone
+char *PRfpacketBuffer = &packetBuffer[rfStartPosition]; // pointer to the input UDP data zone
 char  ReplyBuffer[] = "ack";       // a string to send back
 byte dataBin[50];  // min data en out UDP pour un max trame a 30 + 6
 uint8_t ShiftUdp = 0;
@@ -273,6 +274,8 @@ void setup() {
     Serial.print("-");
     Serial.print(subnet);
     Serial.print("-");
+    Serial.print(dnsAddr);
+    Serial.println("-");
     pinMode(chipSelectEth, OUTPUT);
     digitalWrite(chipSelectEth, HIGH);
 
@@ -413,7 +416,7 @@ boolean RequestDns() {
   lastDNSupdateTime = millis();
   bitWrite(diagByte, diagDNS, !gotDns);
   if (gotDns) {
-    RemoteIPForGateway=newIP;
+    RemoteIPForGateway = newIP;
     Serial.print("DNS ok ip:");
     Serial.println( RemoteIPForGateway);
     RemoteIPForStation = RemoteIPForGateway;
