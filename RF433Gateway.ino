@@ -77,8 +77,8 @@ EthernetClient client;
 #ifdef useDns
 #include <Dns.h>
 DNSClient dnsClient;
-char hubServer[] = "cuillerj.chickenkiller.com";
-//char hubServer[]="yourhubserver.chickenkiller.com";
+
+char hubServer[]="yourhubserver.chickenkiller.com";
 #endif
 #include <EthernetUdp.h>         // UDP library from: bjoern@cs.stanford.edu 12/30/2008
 #include <EEPROM.h>
