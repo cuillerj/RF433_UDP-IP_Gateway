@@ -13,8 +13,9 @@
    version 6 retablissement lecture udp as station
    version 7 modification resolution DNS debug et non bloquante au demarrage
    version 8 print dns
+   version 9 frames missed count improvment
 */
-#define Version 8
+#define Version 9
 
 /*
   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
@@ -64,7 +65,7 @@
    if defined dns address must have been stored in eeprom
     if use set the server name inside RequestDns()
 */
-#define debugOn // uncomment for debuging
+//#define debugOn // uncomment for debuging
 //#define printStat // uncomment for debuging
 //#define initEeprom
 //#define useDns  // uncomment for using DNS resolution to find the server by name over internet - otherwise use stored server IP

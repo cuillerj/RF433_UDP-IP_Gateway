@@ -66,7 +66,13 @@ void TrameAnalyzeRFInput() {
         }
         else {
           if (frameCountStation[station] + 1 != RFcount) {
-            RFframeMissed[station]++;
+            if(frameCountStation[station] + 1 < RFcount)
+            {
+              RFframeMissed[station]=RFframeMissed[station]+RFcount-frameCountStation[station] ;
+            }
+              else{
+                RFframeMissed[station]++;
+              }
 #if defined(debugOn)
             Serial.print("frame missed:");
             Serial.println(frameCountStation[station] + 1, HEX);
