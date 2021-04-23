@@ -38,6 +38,9 @@ void TrameAnalyzeRFInput() {
       uint8_t station = FindStationIndex(RFaddrE);
       if (station != 0xff) {
         foundStation = true;              // known station
+        if(ActiveStations[station]==0x00){
+          frameCountStation[station]=RFcount-1;  // to synchronise count with station
+        }
         ActiveStations[station] = RFaddrE;  // store station address in active list
         lastRFreceivedTime[station]=millis();
         TrafficStationsIn[station] = TrafficStationsIn[station] + 1;
