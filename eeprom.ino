@@ -1,24 +1,3 @@
-/*
-   configuration to set once in the eeprom
-*/
-
-
-uint8_t newID[2] = {0xfb, 0x00};
-uint8_t macaddr[6] = {
-  0x00, 0xAA, 0xBB, 0xCC, 0xDE, 0x05
-}; // must be unique on the LAN
-uint8_t ipaddr[4] = {
-  0xC0, 0xA8, 0x01, 0xfa
-};       //    must be unique on the network
-uint8_t ipmask[4] = {
-  0xFF, 0xFF, 0xFF, 0x00
-};
-uint8_t ipgateway[4] = {
-  0xC0, 0xA8, 0x00, 0x01
-};
-uint8_t dnsAddr[4] = {
-  0xC0, 0xA8, 0x00, 0x01
-};
 
 void InitEeprom() {
   PrintEeprom();
@@ -50,9 +29,10 @@ void InitEeprom() {
     for (int i = 0; i < sizeof(dnsAddr); i++) {
     EEPROM.update(addrdynDns + i, dnsAddr[i]);
   }
-  Serial.println("eeprom updated > power off the UNO, remove MOSI PIN on ICSP, add the ethernet shield and reboot");
-  delay(60 * 60000);
+  Serial.println("reload without initEeprom !");
+  while(true){};
 }
+
 
 void PrintEeprom() {
   int startAddress = 0;
@@ -91,7 +71,7 @@ void PrintEeprom() {
   Serial.print("IP gw:");
   for (int i = 0; i < 4; i++)
   {
-    Serial.print(EEPROM.read(addrdynDns+ i));
+    Serial.print(EEPROM.read(addrdynDns + i));
     Serial.print("-");
   }
   Serial.println();

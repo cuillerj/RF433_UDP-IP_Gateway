@@ -14,8 +14,10 @@
    version 7 modification resolution DNS debug et non bloquante au demarrage
    version 8 print dns
    version 9 frames missed count improvment
+   version 10 modif print rf
+   version 11 ajout option preprocesseur pour gestion des config et modif update eeprom
 */
-#define Version 9
+#define Version 11
 
 /*
   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
@@ -68,7 +70,10 @@
 //#define debugOn // uncomment for debuging
 //#define printStat // uncomment for debuging
 //#define initEeprom
-//#define useDns  // uncomment for using DNS resolution to find the server by name over internet - otherwise use stored server IP
+//#define useDns  // uncomment for using DNS resolution to find the server by name over internet - otherwise use stored server IP - automatic for TLS18
+
+//#include "LH107.h" // config GW le havre
+#include "TLS18.h" // config GW Toulouse
 
 #include <HomeAutomationBytesCommands.h> // commands specifications
 #include <SPI.h>
@@ -79,7 +84,7 @@ EthernetClient client;
 #include <Dns.h>
 DNSClient dnsClient;
 
-char hubServer[]="yourhubserver.chickenkiller.com";
+char hubServer[]="cuillerj.chickenkiller.com";
 #endif
 #include <EthernetUdp.h>         // UDP library from: bjoern@cs.stanford.edu 12/30/2008
 #include <EEPROM.h>
@@ -92,6 +97,7 @@ int addrEeprom = 0;
 #define addrmask 12
 #define addrgateway 16
 #define addrdynDns 20
+
 #define maxStationNumber 12
 #define buzzPin 9
 #define greenLEDPin 7
@@ -220,7 +226,7 @@ byte stationsTimeout[2] = {0x00, 0x00};
    station ID and IP configuration are stored once in eeprom in order - later the software can be download keeping the station configuration
 
 */
-#define configPIN MOSI
+//#define configPIN MOSI
 
 void setup() {
   pinMode(greenLEDPin, OUTPUT);
@@ -239,7 +245,6 @@ void setup() {
   Serial.print("RF433 Gateway V");
   Serial.println(Version);
   Serial.print("station Id:");
-
   //  pinMode(configPIN, INPUT_PULLUP);
 #if defined initEeprom
   InitEeprom();
@@ -326,7 +331,7 @@ void setup() {
 #endif
 
   }
-}
+}   
 
 void loop() {
   delay(1);

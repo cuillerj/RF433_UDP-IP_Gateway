@@ -47,17 +47,17 @@ void TrameAnalyzeRFInput() {
       }
       if (!foundStation) {                  // station not found
         RFstationError++;
-#if defined(debugOn)
+//#if defined(debugOn)
         Serial.print("not found:");
         Serial.println(RFaddrE, HEX);
-#endif
+//#endif
         return;
       }
       else {
-#if defined(debugOn)
+//#if defined(debugOn)
         Serial.print("found:");
         Serial.println(RFaddrE, HEX);
-#endif
+//#endif
         lastRFreceivedTime[station]=millis();
         if (frameCountStation[station] == RFcount)
         {
