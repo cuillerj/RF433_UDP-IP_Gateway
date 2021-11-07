@@ -16,8 +16,9 @@
    version 9 frames missed count improvment
    version 10 modif print rf
    version 11 ajout option preprocesseur pour gestion des config et modif update eeprom
+   version 12 utilisation de dhcp
 */
-#define Version 11
+#define Version 12
 
 /*
   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
@@ -290,9 +291,9 @@ void setup() {
 
     //  Ethernet.begin(mac, IP, dnsAddr, gateway, subnet);
     Ethernet.begin(mac);
-    Ethernet.setGatewayIP(gateway);
-    Ethernet.setLocalIP(IP);
-    Ethernet.setSubnetMask(subnet);
+    //Ethernet.setGatewayIP(gateway);
+   // Ethernet.setLocalIP(IP);
+   // Ethernet.setSubnetMask(subnet);
     delay(1000);
     Serial.println("connecting...");
     Serial.println(Ethernet.localIP());
