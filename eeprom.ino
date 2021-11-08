@@ -17,6 +17,7 @@ void InitEeprom() {
   for (int i = 0; i < sizeof(macaddr); i++) {
     EEPROM.update(addrmac + i, macaddr[i]);
   }
+#ifndef useDHCP
   for (int i = 0; i < sizeof(ipaddr); i++) {
     EEPROM.update(addrip + i, ipaddr[i]);
   }
@@ -26,11 +27,12 @@ void InitEeprom() {
   for (int i = 0; i < sizeof(ipgateway); i++) {
     EEPROM.update(addrgateway + i, ipgateway[i]);
   }
-    for (int i = 0; i < sizeof(dnsAddr); i++) {
+  for (int i = 0; i < sizeof(dnsAddr); i++) {
     EEPROM.update(addrdynDns + i, dnsAddr[i]);
   }
+#endif
   Serial.println("reload without initEeprom !");
-  while(true){};
+  while (true) {};
 }
 
 
@@ -54,6 +56,7 @@ void PrintEeprom() {
     Serial.print("-");
   }
   Serial.println();
+#ifndef useDHCP
   Serial.print("IP addr:");
   for (int i = 0; i < 4; i++)
   {
@@ -82,4 +85,5 @@ void PrintEeprom() {
     Serial.print("-");
   }
   Serial.println();
+#endif
 }

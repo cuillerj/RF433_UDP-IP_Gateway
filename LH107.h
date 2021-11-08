@@ -10,6 +10,7 @@ uint8_t newID[2] = {0xfe, 0x00};
 uint8_t macaddr[6] = {
   0x00, 0xAA, 0xBB, 0xCC, 0xDE, 0x05
 }; // must be unique on the LAN
+#ifndef useDHCP
 uint8_t ipaddr[4] = {
   0xC0, 0xA8, 0x01, 0xc9
 };       //    must be unique on the network
@@ -21,6 +22,7 @@ uint8_t ipgateway[4] = {
 };
 uint8_t dnsAddr[4] = {
   0xC0, 0xA8, 0x01, 0x01
+#endif
 };
 
 #endif

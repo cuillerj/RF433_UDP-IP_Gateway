@@ -16,7 +16,7 @@
    version 9 frames missed count improvment
    version 10 modif print rf
    version 11 ajout option preprocesseur pour gestion des config et modif update eeprom
-   version 12 utilisation de dhcp
+   version 12 ajout option DHCP
 */
 #define Version 12
 
@@ -72,6 +72,7 @@
 //#define printStat // uncomment for debuging
 //#define initEeprom
 //#define useDns  // uncomment for using DNS resolution to find the server by name over internet - otherwise use stored server IP - automatic for TLS18
+//#define useDHCP
 
 //#include "LH107.h" // config GW le havre
 #include "TLS18.h" // config GW Toulouse
@@ -85,7 +86,7 @@ EthernetClient client;
 #include <Dns.h>
 DNSClient dnsClient;
 
-char hubServer[]="cuillerj.chickenkiller.com";
+char hubServer[] = "cuillerj.chickenkiller.com";
 #endif
 #include <EthernetUdp.h>         // UDP library from: bjoern@cs.stanford.edu 12/30/2008
 #include <EEPROM.h>
@@ -260,11 +261,13 @@ void setup() {
   }
   else {
     addrS = valueEeprom;
+#ifndef useDHCP
     IPAddress IP(EEPROM.read(addrip), EEPROM.read(addrip + 1), EEPROM.read(addrip + 2), EEPROM.read(addrip + 3));
     IPAddress gateway(EEPROM.read(addrgateway), EEPROM.read(addrgateway + 1), EEPROM.read(addrgateway + 2), EEPROM.read(addrgateway + 3));
     IPAddress subnet(EEPROM.read(addrmask), EEPROM.read(addrmask + 1), EEPROM.read(addrmask + 2), EEPROM.read(addrmask + 3));
     //#ifdef useDns
     IPAddress dnsAddr(EEPROM.read(addrdynDns), EEPROM.read(addrdynDns + 1), EEPROM.read(addrdynDns + 2), EEPROM.read(addrdynDns + 3));
+#endif
     //#endif
     for (int i = 0; i < 6; i++)
     {
@@ -275,6 +278,7 @@ void setup() {
     Serial.print(addrS);
     Serial.print(" RF:");
     Serial.println(SpeedNetw);
+#ifndef useDHCP
     Serial.print(IP);
     Serial.print("-");
     Serial.print(gateway);
@@ -283,6 +287,7 @@ void setup() {
     Serial.print("-");
     Serial.print(dnsAddr);
     Serial.println("-");
+#endif
     pinMode(chipSelectEth, OUTPUT);
     digitalWrite(chipSelectEth, HIGH);
 
@@ -291,9 +296,11 @@ void setup() {
 
     //  Ethernet.begin(mac, IP, dnsAddr, gateway, subnet);
     Ethernet.begin(mac);
-    //Ethernet.setGatewayIP(gateway);
-   // Ethernet.setLocalIP(IP);
-   // Ethernet.setSubnetMask(subnet);
+#ifndef useDHCP
+    Ethernet.setGatewayIP(gateway);
+    Ethernet.setLocalIP(IP);
+    Ethernet.setSubnetMask(subnet);
+#endif
     delay(1000);
     Serial.println("connecting...");
     Serial.println(Ethernet.localIP());
@@ -332,7 +339,7 @@ void setup() {
 #endif
 
   }
-}   
+}
 
 void loop() {
   delay(1);

@@ -7,7 +7,8 @@
 #else netConfig
 #warning "TLS18 config"
 #define netConfig
-#define useDns 
+#define useDns
+#define useDHCP
 uint8_t newID[2] = {0xfb, 0x00};
 uint8_t macaddr[6] = {
   0x00, 0xAA, 0xBB, 0xCC, 0xDE, 0x15
