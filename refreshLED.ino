@@ -16,11 +16,14 @@ void RefreshLED() {
     digitalWrite(greenLEDPin, !digitalRead(greenLEDPin));
   }
 
-  if (stationsAlert[0] == 0x00 && stationsAlert[1] == 0x00 && stationsTimeout[0]==0x00 && stationsTimeout[1]==0x00) {
+  if (stationsAlert[0] == 0x00 && stationsAlert[1] == 0x00 && stationsTimeout[0] == 0x00 && stationsTimeout[1] == 0x00) {
     digitalWrite(redLEDPin, LOW);
   }
-  else if (millis() - RedLedLastTime > 2000) {
+  else if ((stationsTimeout[0] != 0x00 || stationsTimeout[1] != 0x00) && millis() - RedLedLastTime > 2000) {
     RedLedLastTime = millis();
     digitalWrite(redLEDPin, !digitalRead(redLEDPin));
+  }
+  else {
+    digitalWrite(redLEDPin, HIGH);
   }
 }

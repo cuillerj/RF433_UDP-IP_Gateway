@@ -17,8 +17,9 @@
    version 10 modif print rf
    version 11 ajout option preprocesseur pour gestion des config et modif update eeprom
    version 12 ajout option DHCP
+   version 13 modif diagbyte cas dns et red led
 */
-#define Version 12
+#define Version 13
 
 /*
   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
@@ -75,7 +76,7 @@
 //#define useDHCP
 
 //#include "LH107.h" // config GW le havre
-#include "TLS18.h" // config GW Toulouse
+#include "TLS13.h" // config GW Toulouse
 
 #include <HomeAutomationBytesCommands.h> // commands specifications
 #include <SPI.h>
@@ -119,7 +120,7 @@ unsigned int RFTraffic;
 unsigned int RFinputFrame;
 unsigned int RFstationError;
 unsigned int RFframeMissed[sizeof(ListStations)];
-#define SpeedNetw  2000 // vitessse reception
+
 uint8_t DataIn[25];
 uint8_t addrS = 0x01; // station address
 uint8_t addrE = 0x01; // hex 01 master
@@ -213,7 +214,7 @@ boolean justReboot = true;
 #define diagDNS 5
 
 #ifdef useDns
-byte diagByte = 0b00100111;
+byte diagByte = 0b00100101;
 #else
 byte diagByte = 0b00000111;
 #endif

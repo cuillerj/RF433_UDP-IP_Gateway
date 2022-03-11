@@ -6,6 +6,7 @@
 #else netConfig
 #warning "LH107 config"
 #define netConfig
+#define SpeedNetw  2000 // vitessse reception
 uint8_t newID[2] = {0xfe, 0x00};
 uint8_t macaddr[6] = {
   0x00, 0xAA, 0xBB, 0xCC, 0xDE, 0x05
