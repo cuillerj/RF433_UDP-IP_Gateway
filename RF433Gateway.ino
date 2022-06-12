@@ -18,8 +18,9 @@
    version 11 ajout option preprocesseur pour gestion des config et modif update eeprom
    version 12 ajout option DHCP
    version 13 modif diagbyte cas dns et red led
+   version 14 ajout de station 0x0b 0x0c
 */
-#define Version 13
+#define Version 14
 
 /*
   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
@@ -75,8 +76,8 @@
 //#define useDns  // uncomment for using DNS resolution to find the server by name over internet - otherwise use stored server IP - automatic for TLS18
 //#define useDHCP
 
-//#include "LH107.h" // config GW le havre
-#include "TLS13.h" // config GW Toulouse
+#include "LH107.h" // config GW le havre
+//#include "TLS13.h" // config GW Toulouse
 
 #include <HomeAutomationBytesCommands.h> // commands specifications
 #include <SPI.h>
@@ -107,8 +108,8 @@ int addrEeprom = 0;
 #define redLEDPin 8
 #define sendPin 3
 #define receivePin 5
-uint8_t ListStations[10] = {  // up to 12 stations
-  0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a
+uint8_t ListStations[12] = {  // up to 12 stations
+  0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b,0x0c
 };
 uint8_t ActiveStations[sizeof(ListStations)]; //
 unsigned int TrafficStationsIn[sizeof(ListStations)];  // index idem ActiveStations - a partir activation
